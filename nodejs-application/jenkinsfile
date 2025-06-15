@@ -11,7 +11,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("myapp-image")
+                    // Use correct folder if Dockerfile is inside nodejs-application
+                    dockerImage = docker.build("myapp-image", "nodejs-application")
                 }
             }
         }
@@ -19,10 +20,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    // Stop and remove existing container if running
                     sh "docker rm -f myapp || true"
-                    
-                    // Run the container
                     sh "docker run -d -p 3000:3000 --name myapp myapp-image"
                 }
             }
