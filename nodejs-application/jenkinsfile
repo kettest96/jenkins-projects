@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Use correct folder if Dockerfile is inside nodejs-application
+                    // Change build context to the correct folder
                     dockerImage = docker.build("myapp-image", "nodejs-application")
                 }
             }
