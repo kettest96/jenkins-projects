@@ -4,8 +4,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/kettest96/jenkins-projects.git'
-                
+                git branch: 'main', url: 'https://github.com/kettest96/jenkins-projects.git'
             }
         }
 
@@ -20,6 +19,10 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
+                    // Stop and remove existing container if running
+                    sh "docker rm -f myapp || true"
+                    
+                    // Run the container
                     sh "docker run -d -p 3000:3000 --name myapp myapp-image"
                 }
             }
